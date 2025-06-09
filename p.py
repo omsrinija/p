@@ -42,16 +42,17 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Initialize Hugging Face model (DistilGPT2 for speed; switch to CodeLLaMA for production)
+# Load the Hugging Face model (DistilGPT2)
 @st.cache_resource
 def load_model():
     return pipeline("text-generation", model="distilgpt2")
+
 model = load_model()
 
-# Define the prompt for GrowTech
+# Base prompt for assistant
 base_prompt = """You are GrowTech, a friendly AI tutor for technical skills. Provide clear, beginner-friendly answers with Python code examples. Break explanations into steps, avoid jargon, and suggest next steps. For debugging, identify errors and suggest fixes. Respond to: """
 
-# Sidebar for navigation and options
+# Sidebar
 with st.sidebar:
     st.header("🚀 GrowTech Options")
     skill_level = st.selectbox("Your Skill Level", ["Beginner", "Intermediate", "Advanced"], help="Select your experience level")
@@ -64,14 +65,14 @@ with st.sidebar:
     st.markdown("*About GrowTech*")
     st.write("A free, open-source app to master coding skills! 🎓")
 
-# Main app layout
+# Main content
 st.title("GrowTech: Your Technical Skills Mentor 🌟")
 st.markdown("Ask coding questions, debug code, or get a personalized learning path to level up your skills!")
 
-# Tabs for different features
+# Tabs
 tab1, tab2, tab3 = st.tabs(["💬 Coding Q&A", "🐞 Debug Code", "📚 Learning Path"])
 
-# Tab 1: Coding Q&A
+# Tab 1: Q&A
 with tab1:
     st.header("Ask a Coding Question")
     query = st.text_input("Enter your question (e.g., 'Explain Python loops'):", key="qa_input")
@@ -86,7 +87,7 @@ with tab1:
         else:
             st.error("Please enter a question!")
 
-# Tab 2: Code Debugging
+# Tab 2: Debugging
 with tab2:
     st.header("Debug Your Code")
     code_input = st.text_area("Paste your code here:", key="debug_input", height=150)
@@ -116,7 +117,7 @@ with tab3:
         else:
             st.error("Please enter a learning goal!")
 
-# Feedback form in an expander
+# Feedback section
 with st.expander("📣 Share Your Feedback"):
     with st.form("feedback_form"):
         feedback = st.text_area("Tell us how we can improve GrowTech!", height=100)
@@ -126,4 +127,4 @@ with st.expander("📣 Share Your Feedback"):
 
 # Footer
 st.markdown("---")
-st.markdown("*GrowTech* - Built by TechBit Innovators | Open-source on [code.swecha.org](TBD) | Powered by Hugging Face 🤗")
+st.markdown("*GrowTech* - Built by TechBit Innovators | Open-source on [code.swecha.org](https://code.swecha.org) | Powered by Hugging Face 🤗")
